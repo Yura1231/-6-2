@@ -1,116 +1,61 @@
-﻿#include <iostream>
-#include <cmath>
+#include <iostream>
 
+template <typename T>
 class SquareTransformer {
 public:
-    SquareTransformer(int* array, size_t size) : intArray_(array), size_(size) {}
+    
+    SquareTransformer(T* array, size_t size) : array_(array), size_(size) {}
 
+    
     void transform() {
         for (size_t i = 0; i < size_; ++i) {
-            intArray_[i] = square(intArray_[i]);
+            array_[i] = square(array_[i]);
         }
     }
 
-    void print() const {
+    
+    T square(T value) {
+        return value * value;
+    }
+
+    
+    void printArray() {
         for (size_t i = 0; i < size_; ++i) {
-            std::cout << intArray_[i] << " ";
+            std::cout << array_[i] << " ";
         }
         std::cout << std::endl;
     }
 
 private:
-    int square(int value) const {
-        return value * value;
-    }
-
-    int* intArray_;
-    size_t size_;
-};
-
-class FloatSquareTransformer {
-public:
-    FloatSquareTransformer(float* array, size_t size) : floatArray_(array), size_(size) {}
-
-    void transform() {
-        for (size_t i = 0; i < size_; ++i) {
-            floatArray_[i] = square(floatArray_[i]);
-        }
-    }
-
-    void print() const {
-        for (size_t i = 0; i < size_; ++i) {
-            std::cout << floatArray_[i] << " ";
-        }
-        std::cout << std::endl;
-    }
-
-private:
-    float square(float value) const {
-        return value * value;
-    }
-
-    float* floatArray_;
-    size_t size_;
-};
-
-class LongSquareTransformer {
-public:
-    LongSquareTransformer(long* array, size_t size) : longArray_(array), size_(size) {}
-
-    void transform() {
-        for (size_t i = 0; i < size_; ++i) {
-            longArray_[i] = square(longArray_[i]);
-        }
-    }
-
-    void print() const {
-        for (size_t i = 0; i < size_; ++i) {
-            std::cout << longArray_[i] << " ";
-        }
-        std::cout << std::endl;
-    }
-
-private:
-    long square(long value) const {
-        return value * value;
-    }
-
-    long* longArray_;
+    T* array_;
     size_t size_;
 };
 
 int main() {
+    
     int intArray[] = { 1, 2, 3, 4, 5 };
-    SquareTransformer intTransformer(intArray, sizeof(intArray) / sizeof(int));
-
-    std::cout << "Original int array: ";
-    intTransformer.print();
-
+    SquareTransformer<int> intTransformer(intArray, sizeof(intArray) / sizeof(int));
     intTransformer.transform();
+    std::cout << "Transformed int array: ";
+    intTransformer.printArray();
 
-    std::cout << "Squared int array: ";
-    intTransformer.print();
-
+    
     float floatArray[] = { 1.1, 2.2, 3.3, 4.4, 5.5 };
-    FloatSquareTransformer floatTransformer(floatArray, sizeof(floatArray) / sizeof(float));
-
-    std::cout << "Original float array: ";
-    floatTransformer.print();
-
+    SquareTransformer<float> floatTransformer(floatArray, sizeof(floatArray) / sizeof(float));
     floatTransformer.transform();
+    std::cout << "Transformed float array: ";
+    floatTransformer.printArray();
 
-    std::cout << "Squared float array: ";
-    floatTransformer.print();
-
-    long longArray[] = { 1000L, 2000L, 3000L, 4000L, 5000L };
-    LongSquareTransformer longTransformer(longArray, sizeof(longArray) / sizeof(long));
-
-    std::cout << "Original long array: ";
-    longTransformer.print();
-
+    
+    long longArray[] = { 1L, 2L, 3L, 4L, 5L };
+    SquareTransformer<long> longTransformer(longArray, sizeof(longArray) / sizeof(long));
     longTransformer.transform();
+    std::cout << "Transformed long array: ";
+    longTransformer.printArray();
 
-    std::cout << "Squared long array: ";
+    return 0;
+}
+
     longTransformer.print();
 
     return 0;
